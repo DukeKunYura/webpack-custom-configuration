@@ -1,14 +1,20 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
-const handler = (percentage, message, ...args) => {
+type Mode = "production" | "development";
+
+interface EnvVariables {
+  mode: Mode;
+}
+
+const handler = (percentage: any, message: any, ...args: any[]) => {
   // e.g. Output each progress message directly to the console:
   console.info(percentage, message, ...args);
 };
 
-module.exports = (env) => {
-  return {
+export default (env: EnvVariables) => {
+  const config: webpack.Configuration = {
     mode: env.mode ?? "development",
     entry: path.resolve(__dirname, "src", "index.ts"),
     plugins: [
@@ -35,4 +41,5 @@ module.exports = (env) => {
       extensions: [".tsx", ".ts", ".js"],
     },
   };
+  return config;
 };
