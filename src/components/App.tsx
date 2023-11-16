@@ -1,9 +1,9 @@
-import "./App.css";
+import "./App.scss";
 
 export const App = () => {
   return (
     <div>
-      <button className="button">Press</button>
+      <button className="button"><span>Press</span></button>
     </div>
   );
 };
