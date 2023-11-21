@@ -1,9 +1,11 @@
-import "./App.scss";
+import classes from "./App.module.scss";
 
 export const App = () => {
   return (
     <div>
-      <button className="button"><span>Press</span></button>
+      <button className={classes.button}>
+        <span>Press</span>
+      </button>
     </div>
   );
 };
