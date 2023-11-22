@@ -7,6 +7,8 @@ export const App = () => {
       <Link to={"/about"}>about</Link>
       <br />
       <Link to={"/shop"}>shop</Link>
+      <br />
+      <Link to={"/testform"}>test</Link>
       <button className={classes.button}>
         <span>Press</span>
       </button>
