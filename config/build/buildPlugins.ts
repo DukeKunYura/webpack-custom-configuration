@@ -2,38 +2,45 @@ import webpack, { Configuration } from "webpack";
 import { BuildOptions } from "./types/types";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const handler = (percentage: any, message: any, ...args: any[]) => {
-    // e.g. Output each progress message directly to the console:
-    console.info(percentage, message, ...args);
-  };
+  // e.g. Output each progress message directly to the console:
+  console.info(percentage, message, ...args);
+};
 
-export function buildPlugins({mode, paths}: BuildOptions): Configuration['plugins'] {
+export function buildPlugins({
+  mode,
+  paths,
+  analyzer,
+}: BuildOptions): Configuration["plugins"] {
+  const isDev = mode === "development";
+  const isProd = mode === "production";
 
-    const isDev = mode === "development";
-    const isProd = mode === "production";
+  const plugins: Configuration["plugins"] = [
+    new HtmlWebpackPlugin({
+      template: paths.html,
+    }),
+  ];
 
-    const plugins: Configuration['plugins'] = [
-        new HtmlWebpackPlugin({
-            template: paths.html,
-          })
+  if (isDev) {
+    plugins.push(new webpack.ProgressPlugin(handler));
+  }
 
-    ]
+  if (isProd) {
+    plugins.push(
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: "css/[name].[contenthash:8].css",
+        chunkFilename: "css/[name].[contenthash:8].css",
+      })
+    );
+  }
 
-    if (isDev) {
-        plugins.push(new webpack.ProgressPlugin(handler))
+  if (analyzer) {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
 
-    }
-
-    if (isProd) {
-        plugins.push(new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
-            filename: "css/[name].[contenthash:8].css",
-            chunkFilename: "css/[name].[contenthash:8].css",
-          }))
-    }
-
-    return plugins;
-
+  return plugins;
 }
