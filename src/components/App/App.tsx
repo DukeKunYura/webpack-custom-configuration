@@ -1,7 +1,13 @@
 import { Link, Outlet } from "react-router-dom";
 import classes from "./App.module.scss";
 
+
+function TODO(a: number) {
+  console.log(a);
+}
 export const App = () => {
+
+  TODO(1233)
 
   // if (__PLATFORM__ === "desktop") {
   //   return <div>desktop</div>

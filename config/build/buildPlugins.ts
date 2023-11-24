@@ -3,6 +3,7 @@ import { BuildOptions } from "./types/types";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const handler = (percentage: any, message: any, ...args: any[]) => {
   // e.g. Output each progress message directly to the console:
@@ -29,6 +30,7 @@ export function buildPlugins({
 
   if (isDev) {
     plugins.push(new webpack.ProgressPlugin(handler));
+    plugins.push(new ForkTsCheckerWebpackPlugin());
   }
 
   if (isProd) {
