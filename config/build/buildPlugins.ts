@@ -5,6 +5,8 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import CopyPlugin from "copy-webpack-plugin";
+import path from "path";
 
 const handler = (percentage: any, message: any, ...args: any[]) => {
   // e.g. Output each progress message directly to the console:
@@ -23,6 +25,7 @@ export function buildPlugins({
   const plugins: Configuration["plugins"] = [
     new HtmlWebpackPlugin({
       template: paths.html,
+      favicon: path.resolve(paths.public, "instagram_logo.ico")
     }),
     new DefinePlugin({
       __PLATFORM__: JSON.stringify(platform),
@@ -44,6 +47,13 @@ export function buildPlugins({
         chunkFilename: "css/[name].[contenthash:8].css",
       })
     );
+    plugins.push(
+      new CopyPlugin({
+        patterns: [
+          { from: path.resolve(paths.public, "locales"), to: path.resolve(paths.output, "locales") }
+        ],
+      }),
+    )
   }
 
   if (analyzer) {
