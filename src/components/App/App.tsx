@@ -1,12 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
 import classes from "./App.module.scss";
 
-function TODO(a: number) {
-  console.log(a);
+function TODO() {
+  TODO2();
 }
-export const App = () => {
-  TODO(1233);
+function TODO2() {
+  throw new Error();
+}
 
+export const App = () => {
   // if (__PLATFORM__ === "desktop") {
   //   return <div>desktop</div>
   // }
@@ -23,7 +25,7 @@ export const App = () => {
       <Link to={"/shop"}>shop</Link>
       <br />
       <Link to={"/testform"}>test</Link>
-      <button className={classes.button}>
+      <button onClick={TODO} className={classes.button}>
         <span>Press</span>
       </button>
       <Outlet />
